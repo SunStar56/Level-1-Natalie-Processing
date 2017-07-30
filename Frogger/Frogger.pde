@@ -1,18 +1,18 @@
-int frogHopDist=25;
+int frogHopDist=20;
 int frogX=200;
-int frogY=300;
-Car c1 = new Car (25,50,50,75,3);
-Car c2 = new Car (350,100,50,75,3);
-Car c3 = new Car (250,150,50,75,3);
-Car c4 = new Car (400,200,50,75,3);
-Car c5 = new Car (100,250,50,75,3);
+int frogY=350;
+Car c1 = new Car (0,50,75,5);
+Car c2 = new Car (250,100,75,2);
+Car c3 = new Car (190,150,75,4);
+Car c4 = new Car (398,200,75,4);
+Car c5 = new Car (100,250,75,3);
 void setup(){
 size(400,400);
 
 }
 void draw(){
-  background(175,119,212);
-  fill(93, 171, 101);
+  background(45,168,213);
+  fill(255, 204, 204);
   ellipse(frogX,frogY,50,50);
   boundary();
   c1.display();
@@ -25,10 +25,17 @@ void draw(){
   c4.moveLeft();
   c5.display();
   c5.moveRight();
-  
+  if(c1.intersects(c1) || c2.intersects(c2) || c3.intersects(c3) || c4.intersects(c4) || c5.intersects(c5) == true){
+  frogY = 400;
+  }
+  if(frogY < 50){
+  text("You Win!", 50,100);
+  textSize(50);
+  }
+}
  
 
-}
+
 void keyPressed()
 {
   if(key == CODED){
@@ -72,21 +79,20 @@ if(frogY < 0){
 public class Car{
 int carX;
 int carY;
-int carLength;
-int carWidth;
+int carSize;
 int carSpeed;
 
-public Car(int carX, int carY, int carWidth, int carLength, int carSpeed){
+public Car(int carX, int carY, int carSize, int carSpeed){
   this.carX = carX;
   this.carY = carY;
-  this.carLength = carLength;
-  this.carWidth = carWidth;
+
+  this.carSize = carSize;
   this.carSpeed = carSpeed;
 }
 void display() 
   {
-    fill(0,255,0);
-    rect(carX, carY, carLength, carWidth, carSpeed);
+    fill(255,255,153);
+    rect(carX, carY, carSize, 50, carSpeed);
   }
 
 void moveLeft(){
@@ -108,19 +114,14 @@ return carX;
 public int getCarY(){
  return carY; 
 }
-public int getCarLength(){
-return carLength;
+public int getCarSize(){
+return carSize;
 }
-public int getCarWidth(){
-return carWidth;
-}
- boolean intersects(Car c1) {
-if ((frogY > c1.getCarY() && frogY < c1.getCarY()+50) && (frogX > c1.getCarX() && frogX < c1.getCarX()+c1.getCarLength())){
-          frogX = 200;
-          frogY = 300;
+boolean intersects(Car car) {
+if ((frogY > car.getCarY() && frogY < car.getCarY()+50) && (frogX > car.getCarX() && frogX < car.getCarX()+car.getCarSize()))
           return true;
-}  else{
-        return false;
+else
+          return false;
 }
-}
+
 }
